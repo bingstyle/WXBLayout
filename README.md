@@ -15,11 +15,11 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ```objc
 [_v1 wxb_layoutConstraints:^(WXBConstraintMaker *m) {
-        m.centerY.equalSuperView();
-        m.left.equalSuperView().offset(15);
-        m.width.equalTo(@50);
-        m.height.equalTo(@50);
-    }];
+    m.centerY.equalSuperView();
+    m.left.equalSuperView().offset(15);
+    m.width.equalTo(@50);
+    m.height.equalTo(@50);
+}];
 [_v2 wxb_layoutConstraints:^(WXBConstraintMaker *m) {
     m.centerY.equalSuperView();
     _layoutLeft_v2 = m.left.equalTo(_v1.rightAnchor).constant(12).layoutConstraint;
