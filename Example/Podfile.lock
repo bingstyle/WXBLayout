@@ -1,0 +1,16 @@
+PODS:
+  - WXBLayout (0.1.0)
+
+DEPENDENCIES:
+  - WXBLayout (from `../`)
+
+EXTERNAL SOURCES:
+  WXBLayout:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  WXBLayout: 0aa2714d37a198b414f5d4123ac8e08929262625
+
+PODFILE CHECKSUM: 9bc0d134cf88eda37f6c68530e8aac5ddc967f13
+
+COCOAPODS: 1.9.3
