@@ -10,11 +10,12 @@ jobs:
   build:
     name: Build and analyse default scheme using xcodebuild command
     runs-on: macos-latest
-
+    uses: actions/checkout@v2
     steps:
       - name: Build
         env:
           scheme: ${{ 'default' }}
         run: |
+          cd $GITHUB_WORKSPACE/Example
           pod install
           xcodebuild build
