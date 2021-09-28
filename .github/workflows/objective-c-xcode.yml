@@ -16,6 +16,5 @@ jobs:
         env:
           scheme: ${{ 'default' }}
         run: |
-          cd ./Example
           pod install
           xcodebuild build
