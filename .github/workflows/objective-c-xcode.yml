@@ -13,7 +13,6 @@ jobs:
 
     steps:
       - name: Build
-        uses: actions/checkout@v2
         env:
           scheme: ${{ 'default' }}
         run: |
