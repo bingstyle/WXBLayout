@@ -10,8 +10,9 @@ jobs:
   build:
     name: Build and analyse default scheme using xcodebuild command
     runs-on: macos-latest
-    uses: actions/checkout@v2
+    
     steps:
+      - uses: actions/checkout@v2
       - name: Build
         env:
           scheme: ${{ 'default' }}
