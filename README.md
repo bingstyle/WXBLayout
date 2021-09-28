@@ -43,12 +43,23 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-WXBLayout is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
+### CocoaPods
+
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
+
+```ruby
+$ gem install cocoapods
+```
+
+To install it, simply add the following line to your Podfile:
 
 ```ruby
 pod 'WXBLayout'
 ```
+
+### Manually
+
+If you prefer not to use the aforementioned dependency managers, you can integrate WXBLayout into your project manually.
 
 ## Author
 
