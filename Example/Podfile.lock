@@ -1,5 +1,5 @@
 PODS:
-  - WXBLayout (0.1.0)
+  - WXBLayout (0.3.0)
 
 DEPENDENCIES:
   - WXBLayout (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  WXBLayout: 0aa2714d37a198b414f5d4123ac8e08929262625
+  WXBLayout: 48ddd09058667ded988f4519723ebac1c1bf5df2
 
 PODFILE CHECKSUM: 0d4f3714447e90a23f074a40c0812588ef507576
 

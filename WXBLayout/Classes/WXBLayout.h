@@ -62,6 +62,9 @@ typedef WXBLayoutConstraint *(^WXBLayoutPriorityConst)(void);
 @property (nonatomic, copy, readonly) WXBLayoutConstraint *centerX;
 @property (nonatomic, copy, readonly) WXBLayoutConstraint *centerY;
 
+@property (nonatomic, copy, readonly) WXBLayoutConstraint *firstBaseline;
+@property (nonatomic, copy, readonly) WXBLayoutConstraint *lastBaseline;
+
 @end
 
 @interface UIView (Layout_wxb)

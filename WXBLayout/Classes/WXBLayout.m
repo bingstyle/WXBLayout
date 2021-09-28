@@ -186,8 +186,8 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
         case NSLayoutAttributeCenterX: return view.centerXAnchor;
         case NSLayoutAttributeCenterY: return view.centerYAnchor;
             
-        case NSLayoutAttributeLastBaseline: return view.lastBaselineAnchor;
         case NSLayoutAttributeFirstBaseline: return view.firstBaselineAnchor;
+        case NSLayoutAttributeLastBaseline: return view.lastBaselineAnchor;
             
         default: return nil;
     }
@@ -245,6 +245,13 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
 }
 - (WXBLayoutConstraint *)centerY {
     return [self getLayoutType:NSLayoutAttributeCenterY];
+}
+
+- (WXBLayoutConstraint *)firstBaseline {
+    return [self getLayoutType:NSLayoutAttributeFirstBaseline];
+}
+- (WXBLayoutConstraint *)lastBaseline {
+    return [self getLayoutType:NSLayoutAttributeLastBaseline];
 }
 
 @end
