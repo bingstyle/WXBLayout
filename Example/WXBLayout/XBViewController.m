@@ -12,7 +12,7 @@
 @interface XBViewController ()
 @property (nonatomic, strong) UIView *v1;
 @property (nonatomic, strong) UIView *v2;
-@property (nonatomic, strong) UIView *v3;
+@property (nonatomic, strong) UIButton *v3;
 @end
 
 @implementation XBViewController
@@ -34,7 +34,7 @@
     
     [_v1 wxb_layoutConstraints:^(WXBConstraintMaker *m) {
         m.centerY.equalSuperView();
-        m.left.equalSuperView();
+        m.left.equalSuperView().offset(15);
         m.width.equalTo(@50);
         m.height.equalTo(@50);
     }];
@@ -49,8 +49,8 @@
         m.centerY.equalSuperView();
         m.left.equalTo(_v2.rightAnchor).constant(12);
         m.left.equalTo(_v1.rightAnchor).offset(12).priorityValue(999);
-        m.width.equalTo(@50);
-        m.height.equalTo(@50);
+        m.right.lessThanOrEqualTo(@-20);
+        m.height.lessThanOrEqualTo(@30);
     }];
 }
 
@@ -70,7 +70,10 @@
 }
 
 - (IBAction)blueAciton:(UIButton *)sender {
-    _v3.hidden = !_v3.hidden;
+//    _v3.hidden = !_v3.hidden;
+    NSString *title = [_v3 titleForState:UIControlStateNormal];
+    title = [title stringByAppendingString:@"V3"];
+    [_v3 setTitle:title forState:UIControlStateNormal];
 }
 
 #pragma mark - Private
@@ -94,10 +97,11 @@
     return _v2;
 }
 
-- (UIView *)v3 {
+- (UIButton *)v3 {
     if (_v3 == nil) {
-        _v3 = [UIView new];
+        _v3 = [UIButton buttonWithType:UIButtonTypeSystem];
         _v3.backgroundColor = UIColor.blueColor;
+        [_v3 setTitle:@"v3" forState:UIControlStateNormal];
     }
     return _v3;
 }

@@ -7,12 +7,6 @@
 
 #import "WXBLayout.h"
 
-typedef NS_ENUM(NSUInteger, WXBEqualToType) {
-    WXBEqualToTypeDefault,
-    WXBEqualToTypeGreater,
-    WXBEqualToTypeLess,
-};
-
 @interface WXBLayoutConstraint ()
 @property (nonatomic, weak) UIView *view;
 @end
@@ -28,27 +22,60 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
     return obj;
 }
 
-#pragma mark - Public
+- (WXBLayoutPriorityConst)priorityLow {
+    return ^WXBLayoutConstraint *() {
+        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
+        self.layoutConstraint.active = YES;
+        return self;
+    };
+}
+- (WXBLayoutPriorityConst)priorityMedium {
+    return ^WXBLayoutConstraint *() {
+        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
+        return self;
+    };
+}
+- (WXBLayoutPriorityConst)priorityHigh {
+    return ^WXBLayoutConstraint *() {
+        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
+        return self;
+    };
+}
+- (WXBLayoutPriority)priorityValue {
+    return ^WXBLayoutConstraint *(UILayoutPriority priority) {
+        self.layoutConstraint.priority = priority;
+        return self;
+    };
+}
+
 - (WXBLayoutEqualTo)equalTo {
+    NSLayoutAnchor *anchor = [self anchorForView:_view type:_type];
+    __block NSLayoutConstraint *layout;
     
     return ^WXBLayoutConstraint *(id value) {
-        self.layoutConstraint = [self getLayoutWithObject:value equalType:WXBEqualToTypeDefault];
+        if ([value isKindOfClass:NSLayoutAnchor.class]) {
+            layout = [anchor constraintEqualToAnchor:value];
+        }
+        else if ([value isKindOfClass:UIView.class]) {
+            NSLayoutAnchor *viewAnchor = [self anchorForView:value type:self.type];
+            layout = [anchor constraintEqualToAnchor:viewAnchor];
+        }
+        else if ([value isKindOfClass:NSNumber.class]) {
+            NSNumber *number = value;
+            CGFloat constant = number.floatValue;
+            
+            if ([anchor isKindOfClass:NSLayoutDimension.class]) {
+                layout = [(NSLayoutDimension *)anchor constraintEqualToConstant:constant];
+            } else {
+                NSLayoutAnchor *superAnchor = [self anchorForView:self.view.superview type:self.type];
+                layout = [anchor constraintEqualToAnchor:superAnchor];
+                layout.constant = constant;
+            }
+        }
+        self.layoutConstraint = layout;
         return self;
     };
-}
-- (WXBLayoutEqualTo)greaterThanOrEqualTo {
-    
-    return ^WXBLayoutConstraint *(id value) {
-        self.layoutConstraint = [self getLayoutWithObject:value equalType:WXBEqualToTypeGreater];
-        return self;
-    };
-}
-- (WXBLayoutEqualTo)lessThanOrEqualTo {
-    
-    return ^WXBLayoutConstraint *(id value) {
-        self.layoutConstraint = [self getLayoutWithObject:value equalType:WXBEqualToTypeLess];
-        return self;
-    };
+
 }
 
 - (WXBLayoutEqualSuper)equalSuperView {
@@ -85,90 +112,6 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
         self.layoutConstraint.constant = constant;
         return self;
     };
-}
-
-#pragma mark - Priority
-- (WXBLayoutPriorityConst)priorityLow {
-    return ^WXBLayoutConstraint *() {
-        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
-        self.layoutConstraint.active = YES;
-        return self;
-    };
-}
-- (WXBLayoutPriorityConst)priorityMedium {
-    return ^WXBLayoutConstraint *() {
-        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
-        return self;
-    };
-}
-- (WXBLayoutPriorityConst)priorityHigh {
-    return ^WXBLayoutConstraint *() {
-        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
-        return self;
-    };
-}
-- (WXBLayoutPriority)priorityValue {
-    return ^WXBLayoutConstraint *(UILayoutPriority priority) {
-        self.layoutConstraint.priority = priority;
-        return self;
-    };
-}
-
-#pragma mark - Private
-
-- (NSLayoutConstraint *)getLayoutWithAnchor:(NSLayoutAnchor *)anchor
-                                equalType:(WXBEqualToType)equalType {
-    
-    NSLayoutAnchor *currentAnchor = [self anchorForView:_view type:_type];
-    switch (equalType) {
-        case WXBEqualToTypeDefault:
-            return [currentAnchor constraintEqualToAnchor:anchor];
-        case WXBEqualToTypeGreater:
-            return [currentAnchor constraintGreaterThanOrEqualToAnchor:anchor];
-        case WXBEqualToTypeLess:
-            return [currentAnchor constraintLessThanOrEqualToAnchor:anchor];
-    }
-}
-
-- (NSLayoutConstraint *)getLayoutWithConstant:(CGFloat)constant
-                                    equalType:(WXBEqualToType)equalType {
-    NSLayoutAnchor *anchor = [self anchorForView:_view type:_type];
-    switch (equalType) {
-        case WXBEqualToTypeDefault:
-            return [(NSLayoutDimension *)anchor constraintEqualToConstant:constant];
-        case WXBEqualToTypeGreater:
-            return [(NSLayoutDimension *)anchor constraintGreaterThanOrEqualToConstant:constant];
-        case WXBEqualToTypeLess:
-            return [(NSLayoutDimension *)anchor constraintLessThanOrEqualToConstant:constant];
-    }
-}
-
-- (NSLayoutConstraint *)getLayoutWithObject:(id)value
-                                  equalType:(WXBEqualToType)equalType {
-    
-    NSLayoutAnchor *anchor = [self anchorForView:_view type:_type];
-    NSLayoutConstraint *layout;
-    
-    if ([value isKindOfClass:NSLayoutAnchor.class]) {
-        layout = [self getLayoutWithAnchor:value equalType:equalType];
-    }
-    else if ([value isKindOfClass:UIView.class]) {
-        NSLayoutAnchor *viewAnchor = [self anchorForView:value type:self.type];
-        layout = [self getLayoutWithAnchor:viewAnchor equalType:equalType];
-    }
-    else if ([value isKindOfClass:NSNumber.class]) {
-        NSNumber *number = value;
-        CGFloat constant = number.floatValue;
-        
-        if ([anchor isKindOfClass:NSLayoutDimension.class]) {
-            layout = [self getLayoutWithConstant:constant equalType:equalType];
-        } else {
-            NSLayoutAnchor *superAnchor = [self anchorForView:self.view.superview type:self.type];
-            layout = [self getLayoutWithAnchor:superAnchor equalType:equalType];
-            layout.constant = constant;
-        }
-    }
-    return layout;
 }
 
 - (NSLayoutAnchor *)anchorForView:(UIView *)view type:(NSLayoutAttribute)type {
