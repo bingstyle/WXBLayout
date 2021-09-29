@@ -22,6 +22,5 @@ jobs:
         env:
           scheme: ${{ 'default' }}
         run: |
-          cd $GITHUB_WORKSPACE
-          cd ../Example
+          cd $GITHUB_ACTION_PATH
           pwd
