@@ -17,7 +17,7 @@ jobs:
         run: |
           cd Example
           ls -la
-          pod install
+          pod install --no-repo-update
       - name: Build
         run: |
           cd Example
