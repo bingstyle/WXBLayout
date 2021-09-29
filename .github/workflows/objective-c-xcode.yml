@@ -13,9 +13,10 @@ jobs:
     
     steps:
       - uses: actions/checkout@v1
+        with:
+          path: Example
       - name: Open Example
         env:
           scheme: ${{ 'default' }}
         run: |
-          cd $GITHUB_WORKSPACE
           pwd
