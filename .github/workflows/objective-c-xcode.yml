@@ -21,4 +21,5 @@ jobs:
             -workspace WebAppDemo.xcworkspace
             -scheme WebAppDemo
             -sdk iphonesimulator 
-            -configuration Debug build
+            -configuration Debug 
+            build
