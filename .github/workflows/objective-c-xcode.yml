@@ -21,7 +21,7 @@ jobs:
       - name: Open Example
         env:
           scheme: ${{ 'default' }}
-        run: cd $GITHUB_WORKSPACE/Example
+        run: pwd
       - name: Pod Install
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
         run: pod install
