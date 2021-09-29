@@ -1,6 +1,6 @@
 # WXBLayout
 
-[![CI Status](https://img.shields.io/travis/bingstyle/WXBLayout.svg?style=flat)](https://travis-ci.org/bingstyle/WXBLayout)
+[![Build](https://github.com/bingstyle/WXBLayout/actions/workflows/ci.yml/badge.svg)](https://github.com/bingstyle/WXBLayout/actions/workflows/ci.yml)
 [![Version](https://img.shields.io/cocoapods/v/WXBLayout.svg?style=flat)](https://cocoapods.org/pods/WXBLayout)
 [![License](https://img.shields.io/cocoapods/l/WXBLayout.svg?style=flat)](https://cocoapods.org/pods/WXBLayout)
 [![Platform](https://img.shields.io/cocoapods/p/WXBLayout.svg?style=flat)](https://cocoapods.org/pods/WXBLayout)
