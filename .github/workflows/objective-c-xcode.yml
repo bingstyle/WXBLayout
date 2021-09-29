@@ -13,11 +13,6 @@ jobs:
     
     steps:
       - uses: actions/checkout@v1
-        with:
-          path: Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
       - name: Open Example
         env:
           scheme: ${{ 'default' }}
