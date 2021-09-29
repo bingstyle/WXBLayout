@@ -13,6 +13,14 @@ jobs:
     
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+      - name: Pod Install
+        if: steps.cache-cocoapods.outputs.cache-hit != 'true'
+        run: pod install
       - name: Build
         env:
           scheme: ${{ 'default' }}
