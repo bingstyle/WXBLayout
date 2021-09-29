@@ -16,7 +16,9 @@ jobs:
         with:
           path: Example
       - name: Pod Install
-        run: pod install
+        run: |
+          pwd
+          pod install
       - name: Build
         run: |
           xcodebuild -sdk iphonesimulator -configuration Debug build
