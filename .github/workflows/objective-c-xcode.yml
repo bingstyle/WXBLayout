@@ -17,4 +17,4 @@ jobs:
         run: |
           cd Example
           ls -la
-          run: xcodebuild -sdk iphonesimulator -configuration Debug build
+          xcodebuild -sdk iphonesimulator -configuration Debug build
