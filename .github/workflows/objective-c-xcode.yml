@@ -15,8 +15,8 @@ jobs:
       - uses: actions/checkout@v1
         with:
           path: Example
-      - name: Open Example
-        env:
-          scheme: ${{ 'default' }}
+      - name: Pod Install
+        run: pod install
+      - name: Build
         run: |
-          pwd
+          xcodebuild -sdk iphonesimulator -configuration Debug build
