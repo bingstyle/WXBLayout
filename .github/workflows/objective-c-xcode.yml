@@ -18,5 +18,4 @@ jobs:
           scheme: ${{ 'default' }}
         run: |
           cd $GITHUB_WORKSPACE/Example
-          pod install
-          xcodebuild build
+          xcodebuild -sdk iphonesimulator -configuration Debug build
