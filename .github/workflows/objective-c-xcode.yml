@@ -23,4 +23,5 @@ jobs:
           scheme: ${{ 'default' }}
         run: |
           cd $GITHUB_WORKSPACE
+          cd ../Example
           pwd
