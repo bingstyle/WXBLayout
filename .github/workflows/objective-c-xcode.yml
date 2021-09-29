@@ -17,4 +17,4 @@ jobs:
         run: |
           cd Example
           ls -la
-          run: msbuild WXBLayout.xcworkspace /p:Configuration=Debug /p:Platform=iPhoneSimulator /t:Rebuild
+          run: xcodebuild -sdk iphonesimulator -configuration Debug build
