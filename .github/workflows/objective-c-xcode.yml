@@ -18,6 +18,8 @@ jobs:
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-pods-
+      - name: Open Example
+        run: cd $GITHUB_WORKSPACE/Example
       - name: Pod Install
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
         run: pod install
@@ -25,5 +27,4 @@ jobs:
         env:
           scheme: ${{ 'default' }}
         run: |
-          cd $GITHUB_WORKSPACE/Example
           xcodebuild -sdk iphonesimulator -configuration Debug build
