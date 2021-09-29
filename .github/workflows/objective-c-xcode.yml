@@ -19,12 +19,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pods-
       - name: Open Example
+        env:
+          scheme: ${{ 'default' }}
         run: cd $GITHUB_WORKSPACE/Example
       - name: Pod Install
         if: steps.cache-cocoapods.outputs.cache-hit != 'true'
         run: pod install
       - name: Build
-        env:
-          scheme: ${{ 'default' }}
         run: |
           xcodebuild -sdk iphonesimulator -configuration Debug build
