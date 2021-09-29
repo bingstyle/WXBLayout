@@ -17,4 +17,8 @@ jobs:
         run: |
           cd Example
           ls -la
-          xcodebuild -workspace WebAppDemo.xcworkspace -sdk iphonesimulator -configuration Debug build
+          xcodebuild 
+            -workspace WebAppDemo.xcworkspace
+            -scheme WebAppDemo
+            -sdk iphonesimulator 
+            -configuration Debug build
