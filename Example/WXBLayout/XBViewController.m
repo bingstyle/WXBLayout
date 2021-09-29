@@ -7,7 +7,7 @@
 //
 
 #import "XBViewController.h"
-#import <WXBLayout/WXBLayout.h>
+#import "WXBLayout.h"
 
 @interface XBViewController ()
 @property (nonatomic, strong) UIView *v1;
