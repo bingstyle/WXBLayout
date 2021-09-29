@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
         with:
           path: Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
@@ -22,5 +22,5 @@ jobs:
         env:
           scheme: ${{ 'default' }}
         run: |
-          cd $GITHUB_ACTION_PATH
+          cd $GITHUB_WORKSPACE
           pwd
