@@ -3,7 +3,7 @@
 [![iOS Build](https://github.com/bingstyle/WXBLayout/actions/workflows/ios.yml/badge.svg)](https://github.com/bingstyle/WXBLayout/actions/workflows/ios.yml)
 [![Version](https://img.shields.io/cocoapods/v/WXBLayout.svg?style=flat)](https://cocoapods.org/pods/WXBLayout)
 [![License](https://img.shields.io/cocoapods/l/WXBLayout.svg?style=flat)](https://cocoapods.org/pods/WXBLayout)
-[![Platform](https://img.shields.io/cocoapods/p/WXBLayout.svg?style=flat)](https://cocoapods.org/pods/WXBLayout)
+[![Platform](https://img.shields.io/badge/platform-iOS%209.0-blue.svg)](https://cocoapods.org/pods/WXBLayout)
 
 ## Example
 
