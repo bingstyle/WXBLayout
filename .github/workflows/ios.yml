@@ -21,6 +21,7 @@ jobs:
           echo $default | cat >default
           echo Using default scheme: $default
       - name: Build
+        working-directory: ./Example
         env:
           scheme: ${{ 'default' }}
           platform: ${{ 'iOS Simulator' }}
