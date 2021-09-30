@@ -1,0 +1,6 @@
+framework module WXBLayout {
+  umbrella header "WXBLayout-umbrella.h"
+
+  export *
+  module * { export * }
+}
