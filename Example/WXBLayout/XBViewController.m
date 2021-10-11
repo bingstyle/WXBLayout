@@ -17,7 +17,7 @@
 
 @implementation XBViewController
 {
-    NSLayoutConstraint *_layoutLeft_v2;
+    NSLayoutConstraint *_v2LeftConstraint;
 }
 
 #pragma mark - Life cycle
@@ -40,7 +40,7 @@
     }];
     [_v2 wxb_layoutConstraints:^(WXBConstraintMaker *m) {
         m.centerY.equalSuperView();
-        _layoutLeft_v2 = m.left.equalTo(_v1.rightAnchor).constant(12).layoutConstraint;
+        _v2LeftConstraint = m.left.equalTo(_v1.rightAnchor).constant(12).constraint;
         m.left.equalTo(@12).priorityLow();
         m.width.equalTo(@50);
         m.height.equalTo(@50);
@@ -66,7 +66,7 @@
 }
 - (IBAction)greenAction:(id)sender {
     _v2.hidden = !_v2.hidden;
-    _layoutLeft_v2.active = !_v2.hidden;
+    _v2LeftConstraint.active = !_v2.hidden;
 }
 
 - (IBAction)blueAciton:(UIButton *)sender {

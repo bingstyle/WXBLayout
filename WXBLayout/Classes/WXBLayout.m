@@ -7,19 +7,13 @@
 
 #import "WXBLayout.h"
 
-typedef NS_ENUM(NSUInteger, WXBEqualToType) {
-    WXBEqualToTypeDefault,
-    WXBEqualToTypeGreater,
-    WXBEqualToTypeLess,
-};
-
 @interface WXBLayoutConstraint ()
 @property (nonatomic, weak) UIView *view;
 @end
 @implementation WXBLayoutConstraint
 
 - (void)dealloc {
-    self.layoutConstraint.active = YES;
+    self.constraint.active = YES;
 }
 
 + (instancetype)newWithView:(UIView *)view {
@@ -32,21 +26,21 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
 - (WXBLayoutEqualTo)equalTo {
     
     return ^WXBLayoutConstraint *(id value) {
-        self.layoutConstraint = [self getLayoutWithObject:value equalType:WXBEqualToTypeDefault];
+        self.constraint = [self getLayoutWithObject:value relation:NSLayoutRelationEqual];
         return self;
     };
 }
 - (WXBLayoutEqualTo)greaterThanOrEqualTo {
     
     return ^WXBLayoutConstraint *(id value) {
-        self.layoutConstraint = [self getLayoutWithObject:value equalType:WXBEqualToTypeGreater];
+        self.constraint = [self getLayoutWithObject:value relation:NSLayoutRelationGreaterThanOrEqual];
         return self;
     };
 }
 - (WXBLayoutEqualTo)lessThanOrEqualTo {
     
     return ^WXBLayoutConstraint *(id value) {
-        self.layoutConstraint = [self getLayoutWithObject:value equalType:WXBEqualToTypeLess];
+        self.constraint = [self getLayoutWithObject:value relation:NSLayoutRelationLessThanOrEqual];
         return self;
     };
 }
@@ -54,10 +48,10 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
 - (WXBLayoutEqualSuper)equalSuperView {
     NSLayoutAnchor *anchor = [self anchorForView:_view type:_type];
     NSLayoutAnchor *otherAnchor = [self anchorForView:_view.superview type:_type];
-    NSLayoutConstraint *layout = [anchor constraintEqualToAnchor:otherAnchor];
+    NSLayoutConstraint *constraint = [anchor constraintEqualToAnchor:otherAnchor];
     
     return ^WXBLayoutConstraint *() {
-        self.layoutConstraint = layout;
+        self.constraint = constraint;
         return self;
     };
 }
@@ -67,10 +61,10 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
     NSLayoutAnchor *superAnchor = [self anchorForView:_view.superview type:_type];
     
     return ^WXBLayoutConstraint *(CGFloat constant) {
-        if (self.layoutConstraint == nil) {
-            self.layoutConstraint = [anchor constraintEqualToAnchor:superAnchor];
+        if (self.constraint == nil) {
+            self.constraint = [anchor constraintEqualToAnchor:superAnchor];
         }
-        self.layoutConstraint.constant = constant;
+        self.constraint.constant = constant;
         return self;
     };
 }
@@ -79,10 +73,10 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
     NSLayoutAnchor *superAnchor = [self anchorForView:_view.superview type:_type];
     
     return ^WXBLayoutConstraint *(CGFloat constant) {
-        if (self.layoutConstraint == nil) {
-            self.layoutConstraint = [anchor constraintEqualToAnchor:superAnchor];
+        if (self.constraint == nil) {
+            self.constraint = [anchor constraintEqualToAnchor:superAnchor];
         }
-        self.layoutConstraint.constant = constant;
+        self.constraint.constant = constant;
         return self;
     };
 }
@@ -90,26 +84,25 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
 #pragma mark - Priority
 - (WXBLayoutPriorityConst)priorityLow {
     return ^WXBLayoutConstraint *() {
-        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
-        self.layoutConstraint.active = YES;
+        self.constraint.priority = UILayoutPriorityDefaultLow;
         return self;
     };
 }
 - (WXBLayoutPriorityConst)priorityMedium {
     return ^WXBLayoutConstraint *() {
-        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
+        self.constraint.priority = UILayoutPriorityDefaultLow;
         return self;
     };
 }
 - (WXBLayoutPriorityConst)priorityHigh {
     return ^WXBLayoutConstraint *() {
-        self.layoutConstraint.priority = UILayoutPriorityDefaultLow;
+        self.constraint.priority = UILayoutPriorityDefaultLow;
         return self;
     };
 }
 - (WXBLayoutPriority)priorityValue {
     return ^WXBLayoutConstraint *(UILayoutPriority priority) {
-        self.layoutConstraint.priority = priority;
+        self.constraint.priority = priority;
         return self;
     };
 }
@@ -117,54 +110,54 @@ typedef NS_ENUM(NSUInteger, WXBEqualToType) {
 #pragma mark - Private
 
 - (NSLayoutConstraint *)getLayoutWithAnchor:(NSLayoutAnchor *)anchor
-                                equalType:(WXBEqualToType)equalType {
+                                   relation:(NSLayoutRelation)relation {
     
     NSLayoutAnchor *currentAnchor = [self anchorForView:_view type:_type];
-    switch (equalType) {
-        case WXBEqualToTypeDefault:
+    switch (relation) {
+        case NSLayoutRelationEqual:
             return [currentAnchor constraintEqualToAnchor:anchor];
-        case WXBEqualToTypeGreater:
+        case NSLayoutRelationGreaterThanOrEqual:
             return [currentAnchor constraintGreaterThanOrEqualToAnchor:anchor];
-        case WXBEqualToTypeLess:
+        case NSLayoutRelationLessThanOrEqual:
             return [currentAnchor constraintLessThanOrEqualToAnchor:anchor];
     }
 }
 
 - (NSLayoutConstraint *)getLayoutWithConstant:(CGFloat)constant
-                                    equalType:(WXBEqualToType)equalType {
+                                     relation:(NSLayoutRelation)relation {
     NSLayoutAnchor *anchor = [self anchorForView:_view type:_type];
-    switch (equalType) {
-        case WXBEqualToTypeDefault:
+    switch (relation) {
+        case NSLayoutRelationEqual:
             return [(NSLayoutDimension *)anchor constraintEqualToConstant:constant];
-        case WXBEqualToTypeGreater:
+        case NSLayoutRelationGreaterThanOrEqual:
             return [(NSLayoutDimension *)anchor constraintGreaterThanOrEqualToConstant:constant];
-        case WXBEqualToTypeLess:
+        case NSLayoutRelationLessThanOrEqual:
             return [(NSLayoutDimension *)anchor constraintLessThanOrEqualToConstant:constant];
     }
 }
 
 - (NSLayoutConstraint *)getLayoutWithObject:(id)value
-                                  equalType:(WXBEqualToType)equalType {
+                                  relation:(NSLayoutRelation)relation {
     
     NSLayoutAnchor *anchor = [self anchorForView:_view type:_type];
     NSLayoutConstraint *layout;
     
     if ([value isKindOfClass:NSLayoutAnchor.class]) {
-        layout = [self getLayoutWithAnchor:value equalType:equalType];
+        layout = [self getLayoutWithAnchor:value relation:relation];
     }
     else if ([value isKindOfClass:UIView.class]) {
         NSLayoutAnchor *viewAnchor = [self anchorForView:value type:self.type];
-        layout = [self getLayoutWithAnchor:viewAnchor equalType:equalType];
+        layout = [self getLayoutWithAnchor:viewAnchor relation:relation];
     }
     else if ([value isKindOfClass:NSNumber.class]) {
         NSNumber *number = value;
         CGFloat constant = number.floatValue;
         
         if ([anchor isKindOfClass:NSLayoutDimension.class]) {
-            layout = [self getLayoutWithConstant:constant equalType:equalType];
+            layout = [self getLayoutWithConstant:constant relation:relation];
         } else {
             NSLayoutAnchor *superAnchor = [self anchorForView:self.view.superview type:self.type];
-            layout = [self getLayoutWithAnchor:superAnchor equalType:equalType];
+            layout = [self getLayoutWithAnchor:superAnchor relation:relation];
             layout.constant = constant;
         }
     }

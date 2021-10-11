@@ -26,7 +26,7 @@ typedef WXBLayoutConstraint *(^WXBLayoutPriorityConst)(void);
 + (instancetype)newWithView:(UIView *)view;
 
 @property (nonatomic, assign) NSLayoutAttribute type;
-@property (nonatomic, strong) NSLayoutConstraint *layoutConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *constraint;
 
 @property (nonatomic, copy, readonly) WXBLayoutEqualTo equalTo;
 @property (nonatomic, copy, readonly) WXBLayoutEqualTo greaterThanOrEqualTo;
